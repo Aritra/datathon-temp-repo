@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VQA Datathon · BITS F459</title>
+<meta name="description" content="Efficient visual question answering datathon for BITS F459: problem, data, step-by-step guide, scoring, timeline and rules.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f8fa; --surface:#ffffff; --surface-2:#f0f2f6; --text:#1b1f27; --muted:#5b6474; --border:#dfe3ea;
+  --accent:#2f5bd3; --accent-ink:#ffffff; --accent-soft:#e8eefc; --warn:#9a5b00; --warn-soft:#fff4e0; --ok:#1d7a46;
+  --code-bg:#f3f5f9; --shadow:0 1px 2px rgba(16,24,40,.06),0 1px 3px rgba(16,24,40,.08);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1218; --surface:#161b23; --surface-2:#1c222c; --text:#e6e9ef; --muted:#9aa4b5; --border:#2a313d;
+    --accent:#7ea2ff; --accent-ink:#0f1218; --accent-soft:#1d2840; --warn:#f0b35a; --warn-soft:#2c2414; --ok:#5ccf8f;
+    --code-bg:#1a2029; --shadow:none;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1218; --surface:#161b23; --surface-2:#1c222c; --text:#e6e9ef; --muted:#9aa4b5; --border:#2a313d;
+  --accent:#7ea2ff; --accent-ink:#0f1218; --accent-soft:#1d2840; --warn:#f0b35a; --warn-soft:#2c2414; --ok:#5ccf8f;
+  --code-bg:#1a2029; --shadow:none;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:var(--accent)}
+.wrap{max-width:920px;margin:0 auto;padding:0 16px}
+header.hero{padding:56px 0 32px;border-bottom:1px solid var(--border);background:var(--surface)}
+.kicker{font-weight:600;color:var(--accent);letter-spacing:.04em;text-transform:uppercase;font-size:13px}
+h1{font-size:clamp(28px,5vw,42px);line-height:1.15;margin:8px 0 12px}
+.lede{color:var(--muted);font-size:18px;max-width:680px;margin:0}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0 8px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:10px;font-weight:600;text-decoration:none;border:1px solid var(--border);background:var(--surface);color:var(--text)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn:hover{filter:brightness(1.05)}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-top:28px}
+.fact{background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:14px 16px}
+.fact .k{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.fact .v{font-weight:700;font-size:18px;margin-top:2px}
+nav.toc{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--border)}
+nav.toc .wrap{display:flex;gap:18px;overflow-x:auto;padding:10px 16px;white-space:nowrap;scrollbar-width:none}
+nav.toc a{text-decoration:none;color:var(--muted);font-weight:500;font-size:14px}
+nav.toc a:hover{color:var(--text)}
+section{padding:40px 0 8px}
+h2{font-size:26px;margin:0 0 6px}
+h3{font-size:18px;margin:22px 0 6px}
+.sub{color:var(--muted);margin:0 0 18px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 22px;box-shadow:var(--shadow);margin:14px 0}
+.note{border-left:4px solid var(--warn);background:var(--warn-soft);border-radius:10px;padding:14px 16px;margin:16px 0}
+.note strong{color:var(--warn)}
+ol.steps{list-style:none;counter-reset:s;padding:0;margin:0}
+ol.steps>li{counter-increment:s;position:relative;padding:18px 20px 18px 64px;background:var(--surface);border:1px solid var(--border);border-radius:14px;margin:12px 0;box-shadow:var(--shadow)}
+ol.steps>li::before{content:counter(s);position:absolute;left:18px;top:18px;width:32px;height:32px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-weight:700;display:grid;place-items:center}
+ol.steps h3{margin:2px 0 6px}
+code,pre{font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px}
+code{background:var(--code-bg);padding:1px 6px;border-radius:6px}
+pre{background:var(--code-bg);border:1px solid var(--border);border-radius:10px;padding:14px 16px;overflow-x:auto;line-height:1.5}
+pre code{background:none;padding:0}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+th{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;font-weight:600}
+.tablewrap{overflow-x:auto}
+.timeline{position:relative;margin:8px 0 0;padding-left:26px}
+.timeline::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:var(--border)}
+.tl{position:relative;margin:0 0 18px}
+.tl::before{content:"";position:absolute;left:-23px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--surface);border:3px solid var(--accent)}
+.tl .when{font-size:13px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.03em}
+.tl .what{font-weight:700;font-size:17px}
+.formula{font-family:"JetBrains Mono",monospace;font-size:clamp(13px,2.6vw,17px);background:var(--accent-soft);border-radius:10px;padding:14px 16px;overflow-x:auto;white-space:nowrap}
+ul.tight li{margin:4px 0}
+footer{margin-top:48px;padding:28px 0 40px;border-top:1px solid var(--border);color:var(--muted);font-size:14px}
+.theme-btn{position:fixed;right:14px;bottom:14px;z-index:6;border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:999px;padding:8px 12px;font:inherit;font-size:13px;cursor:pointer;box-shadow:var(--shadow)}
+</style>
+</head>
+<body>
+<button class="theme-btn" id="themeBtn" type="button" aria-label="Toggle colour theme">◐ Theme</button>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">BITS F459 · Computer Vision · Datathon</div>
+    <h1>Efficient Visual Question Answering</h1>
+    <p class="lede">Build a model that looks at a photo, reads a question about it, and answers. The catch: it should be
+      accurate <em>and</em> small and fast. Your model is run on a hidden test set and ranked by accuracy, parameter
+      count and FLOPs.</p>
+    <div class="cta">
+      <a class="btn primary" href="https://www.codabench.org/competitions/18584/" target="_blank" rel="noopener">Codabench competition ↗</a>
+      <a class="btn" href="https://drive.google.com/file/d/1B8rLW0kpBW1ZZ6lU6mu5CyF_lxhLxL5L/view?usp=sharing" target="_blank" rel="noopener">Student package (BITS login) ↗</a>
+    </div>
+    <div class="facts">
+      <div class="fact"><div class="k">Submission deadline</div><div class="v">Thu 26 Nov 2026<br>23:59 IST</div></div>
+      <div class="fact"><div class="k">Teams</div><div class="v">Your project team</div></div>
+      <div class="fact"><div class="k">Baseline to beat</div><div class="v">46.24 score</div></div>
+      <div class="fact"><div class="k">Test day</div><div class="v">To be announced</div></div>
+    </div>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Sections">
+  <div class="wrap">
+    <a href="#problem">Problem</a><a href="#need">What you need</a><a href="#steps">Step by step</a>
+    <a href="#interface">Interface</a><a href="#scoring">Scoring</a><a href="#timeline">Timeline</a>
+    <a href="#rules">Rules</a><a href="#limits">Limits &amp; tips</a><a href="#faq">FAQ</a><a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<section id="problem">
+  <h2>The problem</h2>
+  <p class="sub">Visual question answering (VQA): image + question → short answer.</p>
+  <div class="card">
+    <p style="margin-top:0">Each example is a 224×224 photo and a natural-language question such as <em>“What colour is the bus?”</em>,
+      <em>“How many people are there?”</em> or <em>“Is the man wearing a hat?”</em>. Your model returns a short answer
+      (<code>red</code>, <code>3</code>, <code>yes</code>). Ten people answered every question, and your answer is scored against all ten.</p>
+    <div class="tablewrap"><table>
+      <tr><th>Split</th><th>Images</th><th>Questions</th><th>Answers given?</th><th>Where</th></tr>
+      <tr><td>train</td><td>15,000</td><td>79,676</td><td>yes</td><td>student package</td></tr>
+      <tr><td>val</td><td>2,000</td><td>10,388</td><td>yes</td><td>student package</td></tr>
+      <tr><td>test</td><td>2,000</td><td>10,405</td><td>hidden</td><td>only on Codabench</td></tr>
+    </table></div>
+    <p style="margin-bottom:0">You train on <b>train</b> and choose your model on <b>val</b>. You never see the test set. You upload your <b>code + weights</b>,
+      and Codabench runs them on the hidden test images.</p>
+  </div>
+</section>
+
+<section id="need">
+  <h2>What you need</h2>
+  <p class="sub">Everything runs on free tools.</p>
+  <div class="card"><ul class="tight" style="margin:0;padding-left:20px">
+    <li><b>Your BITS Google account.</b> The student package link opens only for BITS IDs.</li>
+    <li><b>Google Drive space:</b> the package is <b>384 MB</b>. A typical team uses 1–3 GB in total. The free 15 GB is plenty.</li>
+    <li><b>Google Colab</b> (free tier, T4 GPU) for training. Training the baseline takes about 10 minutes.</li>
+    <li><b>A Codabench account</b> (<a href="https://www.codabench.org/" target="_blank" rel="noopener">codabench.org</a>), <b>one per team</b>. Register for the competition; the instructor approves registrations.</li>
+    <li>Basic PyTorch. The package has a complete working baseline to start from.</li>
+  </ul></div>
+</section>
+
+<section id="steps">
+  <h2>Step by step</h2>
+  <p class="sub">From zero to a scored submission.</p>
+  <ol class="steps">
+    <li><h3>Form your team and register</h3>
+      Your datathon team is your <b>course project team</b>. Create <b>one</b> Codabench account for the team, open the
+      <a href="https://www.codabench.org/competitions/18584/" target="_blank" rel="noopener">competition page</a> and click <i>Register</i>. Wait for approval.</li>
+    <li><h3>Get the student package</h3>
+      Download <a href="https://drive.google.com/file/d/1B8rLW0kpBW1ZZ6lU6mu5CyF_lxhLxL5L/view?usp=sharing" target="_blank" rel="noopener"><code>student_package.zip</code></a>
+      (BITS login), unzip it, and upload the <code>student_package</code> folder to your Google Drive as
+      <code>MyDrive/vqa_datathon</code>. It contains the train/val data, the baseline (code + trained checkpoint), the official evaluator,
+      the complexity counter, the submission checker and two Colab notebooks. Read its <code>README.md</code>.</li>
+    <li><h3>Run the baseline</h3>
+      In Drive, open <code>notebooks/student_baseline.ipynb</code> with Colab, choose a <b>T4 GPU</b> runtime and run all cells.
+      The first cell installs the exact library versions Codabench uses. You should get about <b>46.2</b> val accuracy,
+      18.15 M parameters and 3.69 GFLOPs.</li>
+    <li><h3>Improve it</h3>
+      Edit <code>baseline/simple/model.py</code> or write your own <code>model.py</code>. Try better image or text encoders, attention and
+      fusion, answer-space tricks or training tricks. Keep an eye on <b>size and FLOPs</b>, because they cost points (see <a href="#scoring">Scoring</a>).
+      Use <code>eval/vqa_eval.py</code> on val to measure accuracy and <code>eval/complexity.py</code> for params and FLOPs.</li>
+    <li><h3>Build and check your submission</h3>
+      Run <code>notebooks/make_submission.ipynb</code>. It zips <code>model.py</code> + <code>checkpoint.pt</code> + helper files and then runs
+      <b>the same program Codabench runs</b> on 2,000 val questions, on CPU, and prints any error in full. It also reports your val score,
+      params, FLOPs, the estimated test runtime and the zip's SHA256.</li>
+    <li><h3>Submit on Codabench</h3>
+      Upload <code>submission.zip</code> under <i>My Submissions</i>. Check that <b>Status = 0</b>. Codabench does not show logs, only a
+      status code (see <a href="#limits">Limits &amp; tips</a>). Pick which of your submissions is shown on the leaderboard: that one is your entry.</li>
+    <li><h3>Keep improving until the deadline</h3>
+      Up to 3 submissions per day. The leaderboard shows your score on a <b>public</b> part of the test set.
+      Submissions close <b>Thursday 26 November 2026, 23:59 IST</b>.</li>
+    <li><h3>Test day</h3>
+      Date to be announced. Bring your team; your leaderboard submission is run and checked live (see <a href="#timeline">Timeline</a>).</li>
+  </ol>
+</section>
+
+<section id="interface">
+  <h2>The model interface</h2>
+  <p class="sub">Fixed for everyone. Codabench calls exactly this.</p>
+<pre><code>model = build_model()                                   # defined in your model.py
+model.load_state_dict(torch.load("checkpoint.pt", map_location="cpu", weights_only=True))
+answers = model.predict(images, questions)
+#   images    : FloatTensor[B, 3, 224, 224], RGB, values in [0, 1], NOT mean/std-normalised
+#   questions : list[str]  (raw text; use any tokenizer inside your model)
+#   returns   : list[str]  (one lowercase answer per question)</code></pre>
+  <ul class="tight">
+    <li><code>build_model()</code> must work <b>offline</b>. All weights come from <code>checkpoint.pt</code>. Ship vocabularies and other small files next to <code>model.py</code> and read them relative to <code>__file__</code> (the baseline shows how).</li>
+    <li>Codabench environment (CPU only): python 3.10, <b>torch 2.14.1</b>, torchvision 0.29.1, transformers 5.20.2, pillow 12.3.0, numpy 2.2.6, pyyaml. No other packages, and no internet.</li>
+  </ul>
+</section>
+
+<section id="scoring">
+  <h2>Scoring</h2>
+  <p class="sub">Accuracy minus a price for size and compute.</p>
+  <div class="formula">Score = Acc − 2·log₂(Params / 18,154,866) − 2·log₂(FLOPs / 3,688,267,776)</div>
+  <div class="card">
+    <ul class="tight" style="margin:0;padding-left:20px">
+      <li><b>Acc</b>: official VQA accuracy, in %. Answers are normalised (punctuation, number words → digits, articles), and each question scores
+        <code>min(#humans who gave your answer / 3, 1)</code>, averaged over leave-one-out subsets of the 10 human answers. <b>Answer in lowercase.</b></li>
+      <li><b>Params</b>: <code>sum(p.numel() for p in model.parameters())</code>. All parameters count, frozen pretrained backbones included.</li>
+      <li><b>FLOPs</b>: PyTorch <code>FlopCounterMode</code> around one <code>predict()</code> call with batch size 1 and a fixed dummy image and question, on CPU, torch 2.14.1.
+        One multiply-add = 2 FLOPs. Matmul, convolution and attention are counted; element-wise ops are not.</li>
+      <li>The reference values are the <b>baseline's</b>. Every <b>doubling</b> of params costs 2 points, and so does every doubling of FLOPs. Halving either gains 2 points.</li>
+    </ul>
+  </div>
+  <div class="tablewrap"><table>
+    <tr><th>Example</th><th>Acc</th><th>Params</th><th>FLOPs</th><th>Score</th></tr>
+    <tr><td>Baseline</td><td>46.24</td><td>18.2 M (×1)</td><td>3.7 G (×1)</td><td><b>46.24</b></td></tr>
+    <tr><td>Twice the params, same FLOPs</td><td>48.5</td><td>×2</td><td>×1</td><td>46.5</td></tr>
+    <tr><td>Big model, 8× params and 8× FLOPs</td><td>56.0</td><td>×8</td><td>×8</td><td>44.0</td></tr>
+    <tr><td>Half the size and compute</td><td>44.0</td><td>×½</td><td>×½</td><td>48.0</td></tr>
+  </table></div>
+</section>
+
+<section id="timeline">
+  <h2>Timeline &amp; phases</h2>
+  <p class="sub">All times IST.</p>
+  <div class="timeline">
+    <div class="tl"><div class="when">Now</div><div class="what">Build &amp; tune</div>
+      Get the package, run the baseline, improve your model on train/val in Colab.</div>
+    <div class="tl"><div class="when">Opens on Codabench → Thu 26 Nov 2026, 23:59</div><div class="what">Submission phase (public leaderboard)</div>
+      Submit up to 3 times per day. The leaderboard shows your score on the <b>public</b> part of the test set. Choose which submission represents your team.</div>
+    <div class="tl"><div class="when">After the deadline</div><div class="what">Private leaderboard</div>
+      Rankings are recomputed on the <b>private</b> part of the test set, which nobody has seen scores for, and revealed. Your chosen leaderboard submission is the one that counts.</div>
+    <div class="tl"><div class="when">Test day · date to be announced</div><div class="what">Verification &amp; live demo</div>
+      Your leaderboard submission (the exact zip, SHA256-checked) is run offline on <b>new images and questions</b> and audited, and your team demonstrates it.</div>
+  </div>
+  <div class="note"><strong>Codabench ranking ≠ final marks.</strong> The Codabench leaderboard is provisional. Marks are given only after your
+    submission is verified on test day. Entries that cannot be reproduced from the submitted zip, that fail the audit, or that break the rules
+    are penalised or disqualified, whatever their leaderboard rank.</div>
+</section>
+
+<section id="rules">
+  <h2>Rules</h2>
+  <div class="card"><ol style="margin:0;padding-left:20px">
+    <li><b>Inputs:</b> only the image tensor and the question text, through the interface above.</li>
+    <li><b>Training data:</b> train and tune only on the provided train and val sets. Do not use any other image question–answer annotations.</li>
+    <li><b>Pretrained models:</b> generic pretrained backbones are allowed, for example ImageNet classifiers, CLIP-style image/text encoders and BERT-family language models. Their parameters and FLOPs count toward your score. Models trained or fine-tuned for visual question answering, or on any image question–answer data, are <b>not</b> allowed.</li>
+    <li><b>Offline inference:</b> no network access, external APIs or downloads at inference. All weights must be in your checkpoint.</li>
+    <li><b>No shortcuts:</b> do not try to read, store or transmit test data, and do not hard-code or look up answers. The model must answer from the image and the question.</li>
+    <li><b>Teams:</b> your course project team, one Codabench account per team.</li>
+    <li><b>Frozen entry:</b> your leaderboard submission (zip + SHA256) is final. On test day it is run from that same zip.</li>
+    <li><b>Academic integrity:</b> the BITS Pilani academic integrity policy applies.</li>
+  </ol></div>
+</section>
+
+<section id="limits">
+  <h2>Limits &amp; tips</h2>
+  <div class="tablewrap"><table>
+    <tr><th>Limit</th><th>Value</th></tr>
+    <tr><td>Submissions</td><td>3 per day (midnight-to-midnight UTC), 30 in total</td></tr>
+    <tr><td>Run time</td><td>whole test set (10,405 questions) within the time limit shown on Codabench (currently 45 min, CPU only). The baseline needs about 4–6 min.</td></tr>
+    <tr><td>Zip size</td><td>≤ 500 MB</td></tr>
+    <tr><td>Hardware</td><td>CPU only on Codabench, so a model that is fast on a GPU can still be slow there. Check with <code>make_submission.ipynb</code>.</td></tr>
+  </table></div>
+  <h3>Status codes</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Status</th><th>Meaning</th></tr>
+    <tr><td>0</td><td>OK</td></tr>
+    <tr><td>1</td><td>files missing: the zip needs <code>model.py</code> and <code>checkpoint.pt</code> at the top level</td></tr>
+    <tr><td>2</td><td>importing <code>model.py</code> or <code>build_model()</code> failed (e.g. a package that is not installed)</td></tr>
+    <tr><td>3</td><td><code>torch.load</code> / <code>load_state_dict</code> failed</td></tr>
+    <tr><td>4</td><td><code>predict()</code> failed on the dummy input, or did not return <code>list[str]</code></td></tr>
+    <tr><td>5</td><td><code>predict()</code> crashed on test data</td></tr>
+    <tr><td>6</td><td>wrong number or type of answers</td></tr>
+    <tr><td>(failed)</td><td>time limit exceeded</td></tr>
+  </table></div>
+  <h3>Tips</h3>
+  <ul class="tight">
+    <li>Always run <code>make_submission.ipynb</code> before uploading. It runs the same code as Codabench and shows the full error.</li>
+    <li>Output <b>lowercase</b> answers. If all 10 humans wrote <code>yes</code>, then <code>Yes</code> scores 0.</li>
+    <li>Keep the Drive copy of the package and your <b>best</b> checkpoint, not one per epoch.</li>
+    <li>Don't leave your first submission to the last day: Codabench queues can be slow near deadlines.</li>
+  </ul>
+</section>
+
+<section id="faq">
+  <h2>FAQ</h2>
+  <div class="card">
+    <h3 style="margin-top:0">Can I use a pretrained CLIP / ResNet / BERT?</h3>
+    <p>Yes, any generic backbone that was not trained for VQA. Its parameters and FLOPs count toward your score, so a frozen backbone is not free.</p>
+    <h3>Do I have to use the 1,000-answer vocabulary?</h3>
+    <p>No. <code>answers.txt</code> is just the baseline's answer space. Any approach that returns answer strings is fine.</p>
+    <h3>Can I train on val as well?</h3>
+    <p>Yes, train and val are both provided data. But you then lose your only local estimate of test accuracy.</p>
+    <h3>My submission works in Colab but fails on Codabench.</h3>
+    <p>Run <code>make_submission.ipynb</code>: it runs on CPU with the Codabench program. Common causes are a package missing from the environment, files read from outside the model folder, a GPU-only call, or answers that are not strings.</p>
+    <h3 style="margin-bottom:6px">Does a top Codabench rank guarantee top marks?</h3>
+    <p style="margin-bottom:0">No. See the note in <a href="#timeline">Timeline</a>. Marks depend on test-day verification of your leaderboard submission.</p>
+  </div>
+</section>
+
+<section id="contact">
+  <h2>Contact</h2>
+  <div class="card">For any question, contact <b>the instructor (Aritra Mukherjee)</b> or <b>Izzat</b> directly. For technical questions that may help everyone, you can also use the
+    forum on the <a href="https://www.codabench.org/competitions/18584/" target="_blank" rel="noopener">Codabench competition page</a>.</div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    BITS F459 VQA Datathon · BITS Pilani, Hyderabad Campus.<br>
+    Data attribution: questions and answers from VQAv2 (© VQA Consortium, CC BY 4.0); images from COCO (© their Flickr owners, see the
+    <a href="https://cocodataset.org/#termsofuse" target="_blank" rel="noopener">COCO terms of use</a>). The data is provided for course use only; do not redistribute.
+  </div>
+</footer>
+
+<script>
+(function(){
+  var KEY = "vqa-dt-theme", root = document.documentElement, btn = document.getElementById("themeBtn");
+  try { var t = localStorage.getItem(KEY); if (t) root.setAttribute("data-theme", t); } catch (e) {}
+  btn.addEventListener("click", function(){
+    var dark = root.getAttribute("data-theme") ? root.getAttribute("data-theme") === "dark"
+             : window.matchMedia("(prefers-color-scheme: dark)").matches;
+    var next = dark ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    try { localStorage.setItem(KEY, next); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>
