@@ -74,6 +74,9 @@ th{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.03
 .tl .what{font-weight:700;font-size:17px}
 .formula{font-family:"JetBrains Mono",monospace;font-size:clamp(13px,2.6vw,17px);background:var(--accent-soft);border-radius:10px;padding:14px 16px;overflow-x:auto;white-space:nowrap}
 ul.tight li{margin:4px 0}
+.colab{display:inline-flex;align-items:center;gap:8px;margin:10px 8px 2px 0;padding:8px 14px;border-radius:9px;font-weight:600;font-size:14px;text-decoration:none;background:#f9ab00;color:#1b1f27;border:1px solid #e09a00}
+.colab:hover{filter:brightness(1.05)}
+.colab .co{font-family:"JetBrains Mono",monospace;font-weight:700}
 footer{margin-top:48px;padding:28px 0 40px;border-top:1px solid var(--border);color:var(--muted);font-size:14px}
 .theme-btn{position:fixed;right:14px;bottom:14px;z-index:6;border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:999px;padding:8px 12px;font:inherit;font-size:13px;cursor:pointer;box-shadow:var(--shadow)}
 </style>
@@ -91,6 +94,8 @@ footer{margin-top:48px;padding:28px 0 40px;border-top:1px solid var(--border);co
     <div class="cta">
       <a class="btn primary" href="https://www.codabench.org/competitions/18584/" target="_blank" rel="noopener">Codabench competition ↗</a>
       <a class="btn" href="https://drive.google.com/file/d/1B8rLW0kpBW1ZZ6lU6mu5CyF_lxhLxL5L/view?usp=sharing" target="_blank" rel="noopener">Student package (BITS login) ↗</a>
+      <a class="colab" href="https://colab.research.google.com/github/Aritra/datathon-temp-repo/blob/main/notebooks/student_baseline.ipynb" target="_blank" rel="noopener"><span class="co">CO</span> Baseline notebook ↗</a>
+      <a class="colab" href="https://colab.research.google.com/github/Aritra/datathon-temp-repo/blob/main/notebooks/make_submission.ipynb" target="_blank" rel="noopener"><span class="co">CO</span> Submission notebook ↗</a>
     </div>
     <div class="facts">
       <div class="fact"><div class="k">Submissions open</div><div class="v">Thu 12 Nov 2026<br>00:00 IST</div></div>
@@ -139,6 +144,7 @@ footer{margin-top:48px;padding:28px 0 40px;border-top:1px solid var(--border);co
     <li><b>Google Colab</b> (free tier, T4 GPU) for training. Training the baseline takes about 10 minutes.</li>
     <li><b>A Codabench account</b> (<a href="https://www.codabench.org/" target="_blank" rel="noopener">codabench.org</a>), <b>one per team</b>. Register for the competition; the instructor approves registrations.</li>
     <li>Basic PyTorch. The package has a complete working baseline to start from.</li>
+    <li>The Colab buttons open the notebooks from this site, but the notebooks read the <b>data from your Drive</b>, so upload the package to <code>MyDrive/vqa_datathon</code> first (step 2).</li>
   </ul></div>
 </section>
 
@@ -155,9 +161,10 @@ footer{margin-top:48px;padding:28px 0 40px;border-top:1px solid var(--border);co
       <code>MyDrive/vqa_datathon</code>. It contains the train/val data, the baseline (code + trained checkpoint), the official evaluator,
       the complexity counter, the submission checker and two Colab notebooks. Read its <code>README.md</code>.</li>
     <li><h3>Run the baseline</h3>
-      In Drive, open <code>notebooks/student_baseline.ipynb</code> with Colab, choose a <b>T4 GPU</b> runtime and run all cells.
+      Open the baseline notebook in Colab with the button below, or open <code>notebooks/student_baseline.ipynb</code> from your Drive with Colab.
+      Choose a <b>T4 GPU</b> runtime and run all cells. Use <i>File → Save a copy in Drive</i> to keep your own edits.
       The first cell installs the exact library versions Codabench uses. You should get about <b>46.2</b> val accuracy,
-      18.15 M parameters and 3.69 GFLOPs.</li>
+      18.15 M parameters and 3.69 GFLOPs.<br><a class="colab" href="https://colab.research.google.com/github/Aritra/datathon-temp-repo/blob/main/notebooks/student_baseline.ipynb" target="_blank" rel="noopener"><span class="co">CO</span> Open baseline notebook in Colab ↗</a></li>
     <li><h3>Improve it</h3>
       Edit <code>baseline/simple/model.py</code> or write your own <code>model.py</code>. Try better image or text encoders, attention and
       fusion, answer-space tricks or training tricks. Keep an eye on <b>size and FLOPs</b>, because they cost points (see <a href="#scoring">Scoring</a>).
@@ -165,7 +172,7 @@ footer{margin-top:48px;padding:28px 0 40px;border-top:1px solid var(--border);co
     <li><h3>Build and check your submission</h3>
       Run <code>notebooks/make_submission.ipynb</code>. It zips <code>model.py</code> + <code>checkpoint.pt</code> + helper files and then runs
       <b>the same program Codabench runs</b> on 2,000 val questions, on CPU, and prints any error in full. It also reports your val score,
-      params, FLOPs, the estimated test runtime and the zip's SHA256.</li>
+      params, FLOPs, the estimated test runtime and the zip's SHA256.<br><a class="colab" href="https://colab.research.google.com/github/Aritra/datathon-temp-repo/blob/main/notebooks/make_submission.ipynb" target="_blank" rel="noopener"><span class="co">CO</span> Open submission notebook in Colab ↗</a></li>
     <li><h3>Submit on Codabench</h3>
       Upload <code>submission.zip</code> under <i>My Submissions</i>. Check that <b>Status = 0</b>. Codabench does not show logs, only a
       status code (see <a href="#limits">Limits &amp; tips</a>). Pick which of your submissions is shown on the leaderboard: that one is your entry.</li>
