@@ -35,7 +35,11 @@ header.hero{padding:56px 0 32px;border-bottom:1px solid var(--border);background
 .kicker{font-weight:600;color:var(--accent);letter-spacing:.04em;text-transform:uppercase;font-size:13px}
 h1{font-size:clamp(28px,5vw,42px);line-height:1.15;margin:8px 0 12px}
 .lede{color:var(--muted);font-size:18px;max-width:680px;margin:0}
-.cta{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0 8px}
+.cta{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:24px 0 6px}
+.cta .btn,.cta .colab{justify-content:center;text-align:center;margin:0;padding:10px 10px;font-size:14px;white-space:nowrap;min-height:44px}
+@media (max-width:860px){.cta{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:440px){.cta{grid-template-columns:1fr}}
+.cta-note{font-size:13px;color:var(--muted);margin:2px 0 0}
 .btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:10px;font-weight:600;text-decoration:none;border:1px solid var(--border);background:var(--surface);color:var(--text)}
 .btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
 .btn:hover{filter:brightness(1.05)}
@@ -92,11 +96,12 @@ footer{margin-top:48px;padding:28px 0 40px;border-top:1px solid var(--border);co
       accurate <em>and</em> small and fast. Your model is run on a hidden test set and ranked by accuracy, parameter
       count and FLOPs.</p>
     <div class="cta">
-      <a class="btn primary" href="https://www.codabench.org/competitions/18584/" target="_blank" rel="noopener">Codabench competition ↗</a>
-      <a class="btn" href="https://drive.google.com/file/d/1B8rLW0kpBW1ZZ6lU6mu5CyF_lxhLxL5L/view?usp=sharing" target="_blank" rel="noopener">Student package (BITS login) ↗</a>
+      <a class="btn primary" href="https://www.codabench.org/competitions/18584/" target="_blank" rel="noopener">Codabench ↗</a>
+      <a class="btn" href="https://drive.google.com/file/d/1B8rLW0kpBW1ZZ6lU6mu5CyF_lxhLxL5L/view?usp=sharing" target="_blank" rel="noopener">Student package ↗</a>
       <a class="colab" href="https://colab.research.google.com/github/Aritra/datathon-temp-repo/blob/main/notebooks/student_baseline.ipynb" target="_blank" rel="noopener"><span class="co">CO</span> Baseline notebook ↗</a>
       <a class="colab" href="https://colab.research.google.com/github/Aritra/datathon-temp-repo/blob/main/notebooks/make_submission.ipynb" target="_blank" rel="noopener"><span class="co">CO</span> Submission notebook ↗</a>
     </div>
+    <p class="cta-note">The student package opens with your BITS Google account. The notebooks open in Colab and read the package from your Drive (step 2).</p>
     <div class="facts">
       <div class="fact"><div class="k">Submissions open</div><div class="v">Thu 12 Nov 2026<br>00:00 IST</div></div>
       <div class="fact"><div class="k">Submission deadline</div><div class="v">Thu 26 Nov 2026<br>23:59 IST</div></div>
