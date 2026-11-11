@@ -149,7 +149,7 @@ footer{margin-top:48px;padding:28px 0 40px;border-top:1px solid var(--border);co
   <div class="card"><ul class="tight" style="margin:0;padding-left:20px">
     <li><b>Your BITS Google account.</b> The student package link opens only for BITS IDs.</li>
     <li><b>Google Drive space:</b> the package is <b>384 MB</b>. A typical team uses 1–3 GB in total. The free 15 GB is plenty.</li>
-    <li><b>Google Colab</b> (free tier, T4 GPU) for training. Training the baseline takes about 10 minutes.</li>
+    <li><b>Google Colab</b> (free tier, T4 GPU) for training. Training the baseline takes about 10 minutes on a T4 (measured; see <a href="#limits">timings</a>).</li>
     <li><b>A Codabench account</b> (<a href="https://www.codabench.org/" target="_blank" rel="noopener">codabench.org</a>), <b>one per team</b>. Register for the competition; the instructor approves registrations.</li>
     <li>Basic PyTorch. The package has a complete working baseline to start from.</li>
     <li>The Colab buttons open the notebooks from this site, but the notebooks read the <b>data from your Drive</b>, so upload the package to <code>MyDrive/vqa_datathon</code> first (step 2).</li>
@@ -171,7 +171,8 @@ footer{margin-top:48px;padding:28px 0 40px;border-top:1px solid var(--border);co
     <li><h3>Run the baseline</h3>
       Open the baseline notebook in Colab with the button below, or open <code>notebooks/student_baseline.ipynb</code> from your Drive with Colab.
       Choose a <b>T4 GPU</b> runtime and run all cells. Use <i>File → Save a copy in Drive</i> to keep your own edits.
-      The first cell installs the exact library versions Codabench uses. You should get about <b>46.2</b> val accuracy,
+      The first cells install the exact library versions Codabench uses. On a fresh runtime the session then <b>restarts once</b>
+      on purpose: when it reconnects, choose <i>Runtime → Run all</i> again. You should get about <b>46</b> val accuracy,
       18.15 M parameters and 3.69 GFLOPs.<br><a class="colab" href="https://colab.research.google.com/github/Aritra/datathon-temp-repo/blob/main/notebooks/student_baseline.ipynb" target="_blank" rel="noopener"><span class="co">CO</span> Open baseline notebook in Colab ↗</a></li>
     <li><h3>Improve it</h3>
       Edit <code>baseline/simple/model.py</code> or write your own <code>model.py</code>. Try better image or text encoders, attention and
@@ -271,6 +272,17 @@ answers = model.predict(images, questions)
     <tr><td>Zip size</td><td>≤ 500 MB</td></tr>
     <tr><td>Hardware</td><td>CPU only on Codabench, so a model that is fast on a GPU can still be slow there. Check with <code>make_submission.ipynb</code>.</td></tr>
   </table></div>
+  <h3>How long does training take on Colab?</h3>
+  <p>The baseline notebook, measured on a free-tier Colab <b>T4 GPU</b> (2026-11-11):</p>
+  <div class="tablewrap"><table>
+    <tr><th>Stage</th><th>Time</th></tr>
+    <tr><td>Setup: mount Drive, install libraries, copy the package to the Colab disk (+ one automatic restart)</td><td>≈ 1.5–2 min</td></tr>
+    <tr><td>ResNet-18 feature extraction (15,000 train + 2,000 val images)</td><td>≈ 1 min</td></tr>
+    <tr><td>Training, 60 epochs (≈ 7.3 s per epoch)</td><td>≈ 8 min</td></tr>
+    <tr><td><b>Total, from <i>Run all</i> to a trained baseline</b></td><td><b>≈ 11–12 min</b></td></tr>
+  </table></div>
+  <p>Bigger models train slower: per-epoch time grows with the size of what you train (and with a larger or unfrozen
+    backbone, feature extraction has to run every epoch). Checkpoints are saved to your Drive, so a disconnect doesn't lose them.</p>
   <h3>How long does CPU inference take?</h3>
   <p>The baseline (18.2 M params, 3.69 GFLOPs), run on the full test set (10,405 questions) with the exact Codabench program and
     Docker image, CPU only:</p>
