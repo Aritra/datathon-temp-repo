@@ -172,7 +172,7 @@ footer{margin-top:48px;padding:28px 0 40px;border-top:1px solid var(--border);co
       Open the baseline notebook in Colab with the button below, or open <code>notebooks/student_baseline.ipynb</code> from your Drive with Colab.
       Choose a <b>T4 GPU</b> runtime and run all cells. Use <i>File → Save a copy in Drive</i> to keep your own edits.
       The first cells install the exact library versions Codabench uses. On a fresh runtime the session then <b>restarts once</b>
-      on purpose: when it reconnects, choose <i>Runtime → Run all</i> again. You should get about <b>46</b> val accuracy,
+      on purpose (Colab may say "session crashed"; that's expected): when it reconnects, choose <i>Runtime → Run all</i> again. You should get about <b>46</b> val accuracy,
       18.15 M parameters and 3.69 GFLOPs.<br><a class="colab" href="https://colab.research.google.com/github/Aritra/datathon-temp-repo/blob/main/notebooks/student_baseline.ipynb" target="_blank" rel="noopener"><span class="co">CO</span> Open baseline notebook in Colab ↗</a></li>
     <li><h3>Improve it</h3>
       Edit <code>baseline/simple/model.py</code> or write your own <code>model.py</code>. Try better image or text encoders, attention and
@@ -268,7 +268,7 @@ answers = model.predict(images, questions)
   <div class="tablewrap"><table>
     <tr><th>Limit</th><th>Value</th></tr>
     <tr><td>Submissions</td><td>3 per day (midnight-to-midnight UTC), 30 in total</td></tr>
-    <tr><td>Run time</td><td>whole test set (10,405 questions) within the time limit shown on Codabench (currently <b>2 hours</b>, CPU only). Codabench's shared workers are slower than a laptop: the baseline takes <b>about 7 min</b> there (see below).</td></tr>
+    <tr><td>Run time</td><td>whole test set (10,405 questions) within the time limit shown on Codabench (currently <b>2 hours</b>, CPU only). The baseline takes <b>about 7 min</b> on Codabench (see below).</td></tr>
     <tr><td>Zip size</td><td>≤ 500 MB</td></tr>
     <tr><td>Hardware</td><td>CPU only on Codabench, so a model that is fast on a GPU can still be slow there. Check with <code>make_submission.ipynb</code>.</td></tr>
   </table></div>
@@ -292,7 +292,7 @@ answers = model.predict(images, questions)
     <tr><td>Desktop CPU (i9-14900K), measured</td><td>2</td><td>3.5 min</td><td>≈ 0.7 min</td></tr>
     <tr><td>Desktop CPU (i9-14900K), measured</td><td>4</td><td>2.1 min</td><td>≈ 0.4 min</td></tr>
     <tr><td><b>Codabench public worker</b>, measured</td><td>2 threads (shared CPUs)</td><td><b>≈ 6.6 min</b></td><td>–</td></tr>
-    <tr><td><b>Colab free tier</b> (2 slower vCPUs), estimate</td><td>2</td><td><b>≈ 10–15 min</b></td><td><b>≈ 2–3 min</b></td></tr>
+    <tr><td><b>Colab free tier, CPU runtime</b>, measured</td><td>2</td><td><b>≈ 22 min</b></td><td><b>≈ 4.5 min</b></td></tr>
   </table></div>
   <p>Inference time grows roughly in proportion to FLOPs, so a model with 2× the baseline's FLOPs needs about 2× these times (≈ 13 min on Codabench). <code>check_submission.py</code> prints this Codabench estimate for your model. Leave a safety margin under the 2-hour limit: a timeout scores nothing. Codabench runs your model with 2 CPU threads; calling <code>torch.set_num_threads</code> with more usually makes it <i>slower</i> there, because the CPUs are shared.
     <code>make_submission.ipynb</code> prints an estimated test runtime for your own model. Keep it well under the Codabench time limit.</p>
