@@ -182,7 +182,7 @@ footer{margin-top:48px;padding:28px 0 40px;border-top:1px solid var(--border);co
       Run <code>notebooks/make_submission.ipynb</code>. It zips <code>model.py</code> + <code>checkpoint.pt</code> + helper files and then runs
       <b>the same program Codabench runs</b> on 2,000 val questions, on CPU, and prints any error in full. It also reports your val score,
       params, FLOPs, the estimated test runtime and the zip's SHA256. A CPU runtime is enough; for the baseline the whole notebook
-      takes <b>about 8–9 min</b> on Colab (see <a href="#limits">timings</a>).<br><a class="colab" href="https://colab.research.google.com/github/Aritra/datathon-temp-repo/blob/main/notebooks/make_submission.ipynb" target="_blank" rel="noopener"><span class="co">CO</span> Open submission notebook in Colab ↗</a></li>
+      takes <b>about 7–8 min</b> on Colab (see <a href="#limits">timings</a>).<br><a class="colab" href="https://colab.research.google.com/github/Aritra/datathon-temp-repo/blob/main/notebooks/make_submission.ipynb" target="_blank" rel="noopener"><span class="co">CO</span> Open submission notebook in Colab ↗</a></li>
     <li><h3>Submit on Codabench</h3>
       Upload <code>submission.zip</code> under <i>My Submissions</i>. Check that <b>Status = 0</b>. Codabench does not show logs, only a
       status code (see <a href="#limits">Limits &amp; tips</a>). Pick which of your submissions is shown on the leaderboard: that one is your entry.</li>
@@ -288,10 +288,10 @@ answers = model.predict(images, questions)
   <p><code>make_submission.ipynb</code> with the baseline, measured on a free-tier Colab <b>CPU</b> runtime (2026-11-11):</p>
   <div class="tablewrap"><table>
     <tr><th>Stage</th><th>Time</th></tr>
-    <tr><td>Setup: mount Drive, install libraries, unzip the package from Drive (+ one automatic restart)</td><td>≈ 3–4 min</td></tr>
+    <tr><td>Setup: mount Drive, install libraries, unzip the package from Drive (+ one automatic restart)</td><td>≈ 2–3 min</td></tr>
     <tr><td>Build <code>submission.zip</code> (67 MB) and unzip it into a fresh folder</td><td>&lt; 30 s</td></tr>
     <tr><td>Codabench ingestion program on 2,000 val questions (2 CPU threads)</td><td>≈ 4.5 min</td></tr>
-    <tr><td><b>Total, from <i>Run all</i> to a checked <code>submission.zip</code></b></td><td><b>≈ 8–9 min</b></td></tr>
+    <tr><td><b>Total, from <i>Run all</i> to a checked <code>submission.zip</code></b></td><td><b>≈ 7–8 min</b></td></tr>
   </table></div>
   <p>The check time grows with your model's FLOPs, like inference on Codabench. It prints a Codabench runtime estimate for your model.</p>
   <h3>How long does CPU inference take?</h3>
