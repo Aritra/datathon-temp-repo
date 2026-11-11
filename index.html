@@ -339,6 +339,10 @@ answers = model.predict(images, questions)
     <p>Yes, train and val are both provided data. But you then lose your only local estimate of test accuracy.</p>
     <h3>My submission works in Colab but fails on Codabench.</h3>
     <p>Run <code>make_submission.ipynb</code>: it runs on CPU with the Codabench program. Common causes are a package missing from the environment, files read from outside the model folder, a GPU-only call, or answers that are not strings.</p>
+    <h3>The submission check says Codabench's CPUs are "slower than most machines", but this page says Codabench is faster than Colab.</h3>
+    <p>The page is right; that remark in <code>check_submission.py</code> is outdated wording. You don't need to worry about it:
+      the runtime <b>estimate</b> it prints for Codabench is correct. Measured with the baseline, Codabench is about 3× faster
+      than Colab's CPU runtime (≈ 7 min vs ≈ 22 min for the whole test set).</p>
     <h3 style="margin-bottom:6px">Does a top Codabench rank guarantee top marks?</h3>
     <p style="margin-bottom:0">No. See the note in <a href="#timeline">Timeline</a>. Marks depend on test-day verification of your leaderboard submission.</p>
   </div>
