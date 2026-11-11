@@ -266,7 +266,7 @@ answers = model.predict(images, questions)
   <div class="tablewrap"><table>
     <tr><th>Limit</th><th>Value</th></tr>
     <tr><td>Submissions</td><td>3 per day (midnight-to-midnight UTC), 30 in total</td></tr>
-    <tr><td>Run time</td><td>whole test set (10,405 questions) within the time limit shown on Codabench (currently <b>2 hours</b>, CPU only). Codabench's shared workers are slow: the baseline takes <b>about 38 min</b> there (see below).</td></tr>
+    <tr><td>Run time</td><td>whole test set (10,405 questions) within the time limit shown on Codabench (currently <b>2 hours</b>, CPU only). Codabench's shared workers are slower than a laptop: the baseline takes <b>about 7 min</b> there (see below).</td></tr>
     <tr><td>Zip size</td><td>≤ 500 MB</td></tr>
     <tr><td>Hardware</td><td>CPU only on Codabench, so a model that is fast on a GPU can still be slow there. Check with <code>make_submission.ipynb</code>.</td></tr>
   </table></div>
@@ -278,10 +278,10 @@ answers = model.predict(images, questions)
     <tr><td>Desktop CPU (i9-14900K), measured</td><td>1</td><td>6.3 min</td><td>≈ 1.2 min</td></tr>
     <tr><td>Desktop CPU (i9-14900K), measured</td><td>2</td><td>3.5 min</td><td>≈ 0.7 min</td></tr>
     <tr><td>Desktop CPU (i9-14900K), measured</td><td>4</td><td>2.1 min</td><td>≈ 0.4 min</td></tr>
-    <tr><td><b>Codabench public worker</b>, measured</td><td>6 (shared)</td><td><b>≈ 38 min</b></td><td>–</td></tr>
+    <tr><td><b>Codabench public worker</b>, measured</td><td>2 threads (shared CPUs)</td><td><b>≈ 6.6 min</b></td><td>–</td></tr>
     <tr><td><b>Colab free tier</b> (2 slower vCPUs), estimate</td><td>2</td><td><b>≈ 10–15 min</b></td><td><b>≈ 2–3 min</b></td></tr>
   </table></div>
-  <p>Inference time grows roughly in proportion to FLOPs, so a model with 2× the baseline's FLOPs needs about 2× these times, i.e. roughly 75 min on Codabench. Leave a safety margin under the 2-hour limit: a timeout scores nothing.
+  <p>Inference time grows roughly in proportion to FLOPs, so a model with 2× the baseline's FLOPs needs about 2× these times (≈ 13 min on Codabench). <code>check_submission.py</code> prints this Codabench estimate for your model. Leave a safety margin under the 2-hour limit: a timeout scores nothing. Codabench runs your model with 2 CPU threads; calling <code>torch.set_num_threads</code> with more usually makes it <i>slower</i> there, because the CPUs are shared.
     <code>make_submission.ipynb</code> prints an estimated test runtime for your own model. Keep it well under the Codabench time limit.</p>
   <h3>Status codes</h3>
   <div class="tablewrap"><table>
